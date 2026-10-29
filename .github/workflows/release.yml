@@ -1,9 +1,20 @@
-# Makes a GitHub release when a tag track-a-<n> or track-b-<n> is pushed.
-# The title of the release is the message of the (annotated) tag.
+# Makes a release of Track A or Track B when you press "Run workflow"
+# (Actions tab, "release"). Fill in the track, the number and the title.
 name: release
 on:
-  push:
-    tags: ["track-a-*", "track-b-*"]
+  workflow_dispatch:
+    inputs:
+      track:
+        description: "Track"
+        type: choice
+        options: [a, b]
+        default: a
+      number:
+        description: "Release number (one more than the last of this track)"
+        required: true
+      title:
+        description: "Title: what changed"
+        required: true
 permissions:
   contents: write
 jobs:
@@ -14,13 +25,15 @@ jobs:
       - name: Create the release
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.ref_name }}
+          TRACK: ${{ inputs.track }}
+          NUMBER: ${{ inputs.number }}
+          TITLE: ${{ inputs.title }}
         run: |
-          git fetch --force origin "refs/tags/$TAG:refs/tags/$TAG"
-          TITLE="$(git tag -l --format='%(contents:subject)' "$TAG")"
-          [ -n "$TITLE" ] || TITLE="$TAG"
-          case "$TAG" in
-            track-a-*) FILES="track_a/recipe.py"; [ -f track_a/selection.csv ] && FILES="$FILES track_a/selection.csv" ;;
-            track-b-*) FILES="submission/model.onnx submission/submission.json" ;;
-          esac
-          gh release create "$TAG" $FILES --title "$TITLE" --notes ""
+          TAG="track-$TRACK-$NUMBER"
+          if [ "$TRACK" = a ]; then
+            FILES="track_a/recipe.py"
+            [ -f track_a/selection.csv ] && FILES="$FILES track_a/selection.csv"
+          else
+            FILES="submission/model.onnx submission/submission.json"
+          fi
+          gh release create "$TAG" $FILES --target "$GITHUB_SHA" --title "$TITLE" --notes ""
