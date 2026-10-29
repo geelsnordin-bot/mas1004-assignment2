@@ -1,3 +1,8 @@
+python src/curate.py look seoul --every 20
+python src/curate.py look busan --every 20
+python src/curate.py look tokyo --every 20
+python src/curate.py look osaka --every 20
+python src/curate.py look taipei --every 20
 python src/official.py --tag baseline
 python src/official.py --tag baseline --seed 1
 python src/curate.py mistakes results/baseline_seed0/model.onnx
