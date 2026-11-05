@@ -1,1 +1,2 @@
 python src/inventory.py
+python src/manual_list.py sheets
