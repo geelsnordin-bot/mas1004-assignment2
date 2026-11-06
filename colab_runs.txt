@@ -1,2 +1,3 @@
+python src/export_groups.py
 python src/official.py --tag manual_drop
 python src/curate.py mistakes results/manual_drop_seed0/model.onnx
