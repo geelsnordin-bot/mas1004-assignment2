@@ -1,2 +1,2 @@
-python src/inventory.py
-python src/manual_list.py sheets
+python src/official.py --tag manual_drop
+python src/curate.py mistakes results/manual_drop_seed0/model.onnx
