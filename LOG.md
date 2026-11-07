@@ -25,3 +25,15 @@ End the log with your plan for what to try next.
 - why: troep eruit die niks kenmerkbaars had voor de stad
 - validation: 0.492 (seoul 0.585, busan 0.376, tokyo 0.639, osaka 0.367, taipei 0.495) (before: 0.496 / 0.495)
 - what it means: "ik had verwacht een betere score aangezien troep eruit gaat wat niks kenmerkbaars had voor de stad en het model verder zelfde blijft dus de score percentueel wel omhoog zou gaan dit is dus wel een kleine shock"
+
+## 2026-11-07 no_flip (Track A)
+- changed: `T.RandomHorizontalFlip()` weggehaald uit train_transform; selectie dezelfde als manual_drop
+- why: "Het recept spiegelt nu elke foto willekeurig links-rechts. Daardoor staat tekst in spiegelbeeld en rijden auto's aan de verkeerde kant. Japan rijdt links, Korea en Taiwan rechts, dus dat is juist een aanwijzing voor de stad. Ik verwacht dat het model zonder spiegelen die aanwijzing beter leert."
+- validation: 0.491 (seoul 0.597, busan 0.360, tokyo 0.627, osaka 0.344, taipei 0.528) (before: 0.492, manual_drop)
+- what it means: "maar blijkbaar werkt het model dus niet zo"
+
+## 2026-11-07 b_starter (Track B)
+- changed: niets, src/train_b.py met de standaardinstellingen (ResNet18, 224 px, 4 epochs, alle trainingsfoto's)
+- why: (nog in te vullen door Nordin)
+- validation: 0.489 (seoul 0.580, busan 0.360, tokyo 0.591, osaka 0.358, taipei 0.557)
+- what it means: (nog in te vullen door Nordin)
