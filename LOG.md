@@ -28,9 +28,9 @@ End the log with your plan for what to try next.
 
 ## 2026-11-07 no_flip (Track A)
 - changed: `T.RandomHorizontalFlip()` weggehaald uit train_transform; selectie dezelfde als manual_drop
-- why: "Het recept spiegelt nu elke foto willekeurig links-rechts. Daardoor staat tekst in spiegelbeeld en rijden auto's aan de verkeerde kant. Japan rijdt links, Korea en Taiwan rechts, dus dat is juist een aanwijzing voor de stad. Ik verwacht dat het model zonder spiegelen die aanwijzing beter leert."
+- why: "Het recept spiegelt elke foto willekeurig horizontaal. Daardoor komt tekst in spiegelbeeld te staan en lijken auto's aan de verkeerde kant van de weg te rijden. Juist die rijrichting kan helpen om steden te onderscheiden: in Japan rijdt men links, in Korea en Taiwan rechts. Mijn verwachting was daarom dat het model deze aanwijzing beter zou oppikken als ik het spiegelen uitzette."
 - validation: 0.491 (seoul 0.597, busan 0.360, tokyo 0.627, osaka 0.344, taipei 0.528) (before: 0.492, manual_drop)
-- what it means: "maar blijkbaar werkt het model dus niet zo"
+- what it means: "Dat bleek niet zo te zijn: de score bleef gelijk. Het model leunt blijkbaar weinig op zulke kleine details en herkent een stad vooral aan het algemene beeld, zoals gebouwen, kleuren en straatbeeld."
 
 ## 2026-11-07 b_starter (Track B)
 - changed: niets, src/train_b.py met de standaardinstellingen (ResNet18, 224 px, 4 epochs, alle trainingsfoto's)
