@@ -18,8 +18,6 @@ This is the recipe the starter code came with. It is the baseline on the
 leaderboard.
 """
 
-import collections
-
 import torch
 import torch.nn.functional as F
 from torchvision import transforms as T
@@ -35,7 +33,7 @@ def train_transform():
     photo is drawn, so the same photo looks different every time.
     """
     return T.Compose([
-        T.RandomResizedCrop(224, scale=(0.35, 1.0)),
+        T.RandomResizedCrop(224, scale=(0.7, 1.0)),
         T.ColorJitter(0.2, 0.2, 0.2),
     ])
 
@@ -48,8 +46,7 @@ def sample_weights(cities, paths):
     is drawn twice as often as one with weight 1. Return None to go through
     the selection in a new random order each time, every photo once per round.
     """
-    counts = collections.Counter(cities)
-    return [1.0 / counts[c] for c in cities]
+    return None
 
 
 def make_optimizer(model):
