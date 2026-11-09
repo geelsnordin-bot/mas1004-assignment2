@@ -2,5 +2,5 @@
   "image_size": 448,
   "starting_weights": "torchvision mobilenet_v3_large IMAGENET1K_V2",
   "data": "data/starter/train",
-  "summary": "mobilenet_v3_large at 448, 4 epochs"
+  "summary": "mobilenet_v3_large at 448, 6 epochs, every city drawn equally often"
 }
