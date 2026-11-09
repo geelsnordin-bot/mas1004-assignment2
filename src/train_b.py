@@ -146,8 +146,29 @@ def main():
     opt = torch.optim.AdamW(net.parameters(), lr=args.lr, weight_decay=0.05)
     sched = torch.optim.lr_scheduler.OneCycleLR(opt, max_lr=args.lr, total_steps=args.epochs * len(loader), pct_start=0.15)
     scaler = torch.amp.GradScaler("cuda", enabled=device.type == "cuda")
-    start = time.time()
-    for epoch in range(args.epochs):
+    # A checkpoint after every epoch, so that a run that Colab broke off
+    # carries on from the last finished epoch when it is started again.
+    out = ROOT / "results" / args.tag
+    out.mkdir(parents=True, exist_ok=True)
+    ckpt = out / "checkpoint.pt"
+    same = {"model": args.model, "size": args.size, "epochs": args.epochs, "lr": args.lr,
+            "batch_size": args.batch_size, "balance": args.balance, "folders": [str(f) for f in args.folders],
+            "steps": len(loader)}
+    first, done_seconds = 0, 0.0
+    if ckpt.exists():
+        state = torch.load(ckpt, map_location=device, weights_only=False)
+        if state.get("same") == same:
+            net.load_state_dict(state["net"])
+            opt.load_state_dict(state["opt"])
+            sched.load_state_dict(state["sched"])
+            scaler.load_state_dict(state["scaler"])
+            torch.set_rng_state(state["rng"])
+            first, done_seconds = state["epoch"], state["seconds"]
+            print(f"carrying on after epoch {first}/{args.epochs} from {ckpt}", flush=True)
+        else:
+            print(f"{ckpt} is from other settings; starting again", flush=True)
+    start = time.time() - done_seconds
+    for epoch in range(first, args.epochs):
         net.train()
         losses = []
         for x, y in loader:
@@ -161,13 +182,16 @@ def main():
             sched.step()
             losses.append(loss.item())
         print(f"epoch {epoch + 1}/{args.epochs}: loss {np.mean(losses):.3f} ({time.time() - start:.0f}s)", flush=True)
+        torch.save({"same": same, "net": net.state_dict(), "opt": opt.state_dict(), "sched": sched.state_dict(),
+                    "scaler": scaler.state_dict(), "rng": torch.get_rng_state(), "epoch": epoch + 1,
+                    "seconds": time.time() - start}, ckpt.with_suffix(".tmp"))
+        os.replace(ckpt.with_suffix(".tmp"), ckpt)
     train_seconds = time.time() - start
 
     val = rules.list_photos(ROOT / "data" / "starter" / "val")[::args.val_every]
     score, per_city, _ = measure(net, val, args.size, device, args.workers)
     print(f"validation score {score:.3f} (" + ", ".join(f"{c} {v:.3f}" for c, v in per_city.items()) + ")")
 
-    out = ROOT / "results" / args.tag
     export_onnx(net, out / "model.onnx", args.size)
     info = {"image_size": args.size, "starting_weights": weights_name,
             "data": " + ".join(shown(f) for f in args.folders), "summary": f"{args.model} at {args.size}, {args.epochs} epochs"}
@@ -179,6 +203,7 @@ def main():
         for name in ("model.onnx", "submission.json"):
             shutil.copy(out / name, ROOT / "submission" / name)
         print("copied to submission/. Check it with: python src/check_submission.py")
+    ckpt.unlink(missing_ok=True)
 
     log = Path(os.environ.get("MAS1004_EXPERIMENTS", ROOT / "experiments.csv"))
     fields = ["finished", "track", "tag", "seed", "official_budget", "budget", "val_score", *CITIES,

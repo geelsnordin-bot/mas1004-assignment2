@@ -1,3 +1,2 @@
-python src/official.py --tag less_zoom
 python src/train_b.py --tag b_mnv3_448 --model mobilenet_v3_large --size 448 --submit
 python src/check_submission.py --no-val
