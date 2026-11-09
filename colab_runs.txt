@@ -1,3 +1,3 @@
-python src/train_b.py --tag b_mnv3_448 --model mobilenet_v3_large --size 448 --submit
+python src/official.py --tag ema
+python src/train_b.py --tag b_mnv3_448_e6_bal --model mobilenet_v3_large --size 448 --epochs 6 --balance --submit
 python src/check_submission.py --no-val
-python src/official.py --tag balanced

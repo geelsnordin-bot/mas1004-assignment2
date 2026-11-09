@@ -19,6 +19,7 @@ leaderboard.
 """
 
 import collections
+import copy
 
 import torch
 import torch.nn.functional as F
@@ -76,10 +77,27 @@ def loss_fn(logits, targets):
     return F.cross_entropy(logits, targets, label_smoothing=0.1)
 
 
+EMA_DECAY = 0.999  # the average covers roughly the last 1000 steps
+_ema = {}
+
+
 def on_step(step, total_steps, model, optimizer):
     """Called after every step, with the step number from 0. Returns nothing."""
+    # Keep a running average of the weights next to the model (EMA).
+    with torch.no_grad():
+        if "model" not in _ema:
+            _ema["model"] = copy.deepcopy(model)
+            return
+        decay = min(EMA_DECAY, (1 + step) / (10 + step))
+        avg = _ema["model"].state_dict()
+        for name, value in model.state_dict().items():
+            if value.dtype.is_floating_point:
+                avg[name].mul_(decay).add_(value, alpha=1 - decay)
+            else:
+                avg[name].copy_(value)
 
 
 def final_model(model):
     """The model to hand in, at the end of training. It must still be the same ResNet18."""
-    return model
+    # Hand in the averaged weights instead of the last ones.
+    return _ema.get("model", model)
