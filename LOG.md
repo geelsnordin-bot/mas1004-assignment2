@@ -37,3 +37,9 @@ End the log with your plan for what to try next.
 - why: (nog in te vullen door Nordin)
 - validation: 0.489 (seoul 0.580, busan 0.360, tokyo 0.591, osaka 0.358, taipei 0.557)
 - what it means: (nog in te vullen door Nordin)
+
+## 2026-11-09 less_zoom (Track A)
+- changed: `T.RandomResizedCrop(224, scale=(0.7, 1.0))` in plaats van `scale=(0.35, 1.0)`; verder gelijk aan no_flip
+- why: "door meer te zien van een foto kan het model een hint krijgen welke stad er bij past stel hij zoomt in en pakt daardoor niet de tekst van een billboard dan wordt kiezen een stuk lastiger"
+- validation: 0.478 (seoul 0.579, busan 0.344, tokyo 0.611, osaka 0.352, taipei 0.505) (before: 0.491, no_flip)
+- what it means: "Ik denk dat de validatiescore lager is uitgevallen doordat het model bij minder willekeurig inzoomen steeds ongeveer dezelfde afbeeldingen te zien kreeg. Hierdoor heeft het model mogelijk te veel geleerd van de trainingsfoto's zelf, in plaats van de algemene kenmerken van een stad te herkennen. Daardoor werkte het model goed op de trainingsdata, maar minder goed op nieuwe afbeeldingen tijdens de validatie."
