@@ -86,6 +86,12 @@ End the log with your plan for what to try next.
 - validation: 0.501 (seoul 0.552, busan 0.427, tokyo 0.533, osaka 0.430, taipei 0.565) (before: 0.507, ema_no_smooth)
 - what it means: "The score, however, dropped from 0.507 to 0.501. This shows that a lower learning rate did not lead to better results in our experiment. Possibly the steps were too small, so that the model could learn less well within the available training rounds. That is why we decided to keep the original learning rate."
 
+## 2026-11-10 safe_all_photos (Track A)
+- changed: all training photos again (no `selection.csv`), left-right flip back, no EMA; kept every city drawn equally often and no label smoothing. Several changes at once, compared with ema_no_smooth
+- why: (to be filled in)
+- validation: 0.505 (seoul 0.510, busan 0.442, tokyo 0.518, osaka 0.456, taipei 0.599) (before: 0.507, ema_no_smooth)
+- what it means: (to be filled in)
+
 ## Plan for what to try next
 "If we had more time, for Track A I would first try to distribute the 250,000 photos better over the cities via `selection.csv`. Seoul and Tokyo have more images than, for example, Busan and Osaka. By adjusting the distribution, the model might learn better to recognise all cities. In addition, in `recipe.py` I would test different learning rates, for example a lower learning rate, so that the model takes smaller steps during learning and possibly becomes more accurate. I would also try different photo edits, such as adjusting brightness and contrast, so that the model learns better to deal with different weather conditions and lighting.
 

@@ -47,6 +47,7 @@ balanced & crop back to 0.35--1.0; every city drawn equally often (built on no\_
 ema & hand in a running average of the weights (EMA, decay 0.999) & 0.500 \\
 ema\_no\_smooth & no label smoothing (was 0.1) & \textbf{0.507} \\
 lr\_1e4 & learning rate 1e-4 instead of 3e-4 (built on ema\_no\_smooth) & 0.501 \\
+safe\_all\_photos & final: all training photos (no selection), flip back, no EMA; kept balanced cities and no label smoothing & 0.505 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -117,8 +118,10 @@ city drawn equally often and no label smoothing, on all training photos (no
 \texttt{selection.csv}), with the left-right flip and without EMA. It keeps only
 the two changes that worked on the leaderboard for others and drops everything
 I could not trust: my selection, no flip and EMA.
-Validation: \fillin{validation score of safe\_all\_photos, or: could not be
-measured before the deadline}. Leaderboard: not known before the deadline.
+Validation: 0.505 (seoul 0.510, busan 0.442, tokyo 0.518, osaka 0.456,
+taipei 0.599), almost the same as my best run (0.507), with Busan at 0.442
+instead of 0.415--0.427 in my runs on the selection. Leaderboard: not known
+before the deadline.
 
 % ---------------------------------------------------------------------------
 \section*{Decisions I made from photos}
@@ -147,7 +150,16 @@ uniforms, aeroplanes, cars up close and interiors. Subtitles, logos and
 watermarks in the picture also fall under this idea.''
 For long series from one photographer or video I kept only a few photos.
 
-\picturefile{figures/manual_busan_00.png}
+Examples of photos I dropped (contact sheets of \texttt{src/manual\_list.py};
+the text under each photo is the reason from my control list):
+
+\sidebyside{figures/manual_taipei_12.jpg}{Taipei: a series of food photos}{figures/manual_seoul_02.jpg}{Seoul: museum pieces}
+\sidebyside{figures/manual_osaka_09.jpg}{Osaka: animals}{figures/manual_tokyo_04.jpg}{Tokyo: aeroplanes, a festival series and a series of one street}
+\begin{center}
+\begin{minipage}{0.48\linewidth}\centering
+\picturefile{figures/manual_busan_13.jpg}\par\small Busan: video frames with a purple text overlay
+\end{minipage}
+\end{center}
 
 \textbf{What I changed.} I wrote a control list of 73 rules
 (\texttt{track\_a/manual\_list.csv}): for each group of photos either drop all
