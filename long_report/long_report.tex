@@ -22,10 +22,15 @@
 \begin{document}
 \makeheader
 
-\fillin{Your leaderboard nickname, and the tags of your last Track A and Track B releases.}
+Leaderboard nickname: \textbf{Stroopwafel-Seoul}. Last releases:
+\texttt{track-a-4} (Track A, recipe \texttt{ema\_no\_smooth}) and
+\texttt{track-b-3} (Track B, \texttt{b\_mnv3\_512\_e8\_bal}).
+\fillin{update if a later release is made}
 
-% The sections below are a suggestion. Change, merge or add sections as you
-% like; README.md, "The long report", says what a reader should be able to see.
+All validation scores below are the balanced accuracy on
+\texttt{data/starter/val} printed by \texttt{src/official.py} (Track A) and
+\texttt{src/train\_b.py} (Track B), copied from \texttt{experiments.csv}.
+The quotes are my own answers from \texttt{LOG.md}.
 
 % ---------------------------------------------------------------------------
 \section*{Track A}
@@ -35,50 +40,151 @@
 \toprule
 tag & what changed from the run before & validation \\
 \midrule
-\multicolumn{3}{l}{\fillin{one row per recipe, with the numbers from experiments.csv}} \\
+baseline & starter recipe, all 44,257 training photos, seed 0 / seed 1 & 0.496 / 0.495 \\
+manual\_drop & 3,019 photos left out using my own control list (selection of 41,238) & 0.492 \\
+no\_flip & no random left-right flip & 0.491 \\
+less\_zoom & random crop scale 0.7--1.0 instead of 0.35--1.0 (built on no\_flip) & 0.478 \\
+balanced & crop back to 0.35--1.0; every city drawn equally often (built on no\_flip) & 0.498 \\
+ema & hand in a running average of the weights (EMA, decay 0.999) & 0.500 \\
+ema\_no\_smooth & no label smoothing (was 0.1) & \textbf{0.507} \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\fillin{What you tried, why, and what you think each result means.}
+\textbf{How much is chance?} The starter recipe trained twice with only a
+different seed gave 0.496 and 0.495. ``The difference of only 0.001 shows that
+the results barely change between the two random seeds. So the baseline seems
+stable.'' Still, most of my Track A changes moved the score by less than 0.01,
+so I treat those differences carefully.
 
-\fillin{Your final recipe and selection, and their leaderboard score next to
-their validation score.}
+\textbf{Removing photos (manual\_drop).} I expected a better score after taking
+out photos ``that had nothing characteristic of the city'', but it went from
+0.496 to 0.492: ``this is a bit of a shock''. See the next section.
+
+\textbf{No flip.} Mirroring turns text around and puts traffic on the other
+side of the road (Japan drives on the left, Korea and Taiwan on the right).
+The score stayed the same (0.491): ``The model apparently relies little on such
+small details and recognises a city mainly by the overall picture.''
+
+\textbf{Less zoom} made it worse (0.478). ``With less random zooming the model
+kept seeing roughly the same images'' and probably learned the training photos
+themselves instead of the general features of a city.
+
+\textbf{Balanced cities.} Busan (4,179) and Osaka (6,731) had far fewer
+selected photos than Tokyo (13,055) and Seoul (10,834). Drawing every city
+equally often raised Busan from 0.360 to 0.415 and Osaka from 0.344 to 0.427,
+but lowered Seoul (0.597 $\to$ 0.552) and Tokyo (0.627 $\to$ 0.554); the total
+went from 0.491 to 0.498. ``A fairer distribution does not automatically mean
+that all cities are recognised better.''
+
+\textbf{EMA} hardly changed anything (0.498 $\to$ 0.500): ``we do not know for
+sure whether it came from EMA or from normal fluctuations.''
+
+\textbf{No label smoothing} gave my best Track A score, 0.507 (0.500 before).
+``Label smoothing was not really necessary in our case and possibly even
+limited performance a little'', but the difference is small.
+
+\textbf{Final recipe and selection:} \texttt{track\_a/recipe.py} as in
+\texttt{ema\_no\_smooth} (balanced sampling, no flip, EMA, no label smoothing)
+with my selection of 41,238 photos. Validation 0.507.
+Leaderboard: \fillin{leaderboard score of track-a-4 when it appears}.
+My first release (the starter recipe, validation 0.496) scored 0.403 on the
+leaderboard.
 
 % ---------------------------------------------------------------------------
-\section*{Decisions you made from photos}
+\section*{Decisions I made from photos}
 
 \picturefile{figures/mistakes_baseline_seed0_busan_00.png}
 
-\fillin{What you looked at, what you saw in common, and the rule you wrote
-before acting.}
+\fillin{What you looked at (the mistakes sheets of the baseline and the
+look/manual sheets per city), what you saw in common, and the rule you wrote
+before acting. In your own words.}
 
-\fillin{What you changed (the output of curate.py count, or the photos you
-added), and the scores before and after.}
+\picturefile{figures/manual_busan_00.png}
 
-\fillin{The requests you gave your agent for these decisions.}
+\textbf{What I changed.} I wrote a control list of 73 rules
+(\texttt{track\_a/manual\_list.csv}): for each group of photos either drop all
+of them or keep at most a few from a long series. The script
+\texttt{src/manual\_list.py} turned it into \texttt{track\_a/selection.csv}
+and \texttt{track\_a/dropped.csv}. Output of \texttt{curate.py count}:
+
+\outputfile{outputs/curate_count.txt}
+
+\textbf{Score before and after:} 0.496 / 0.495 (baseline, two seeds)
+$\to$ 0.492 (manual\_drop). Leaving out 3,019 photos did not help; the
+difference is within what I would expect from chance.
+
+\textbf{My requests to the agent.} \fillin{Check and correct: I asked the
+agent to show me contact sheets of each city and of the model's mistakes; I
+gave it my own list of photo groups to drop (by city and Wikimedia ID range,
+with a reason for each); I asked it to drop the three Busan videos with text
+overlays; and I asked it to train the result as one measured run against the
+baseline.}
 
 % ---------------------------------------------------------------------------
 \section*{Track B}
 
-\fillin{What you tried, one step at a time, and the validation score after
-each step.}
+\begin{center}\footnotesize
+\begin{tabular}{lp{0.6\linewidth}r}
+\toprule
+tag & what changed from the run before & validation \\
+\midrule
+b\_starter & \texttt{train\_b.py} as given: ResNet18, 224 px, 4 epochs & 0.489 \\
+b\_mnv3\_448 & MobileNetV3-Large (ImageNet V2 weights) at 448 px & 0.562 \\
+b\_mnv3\_448\_e6\_bal & 6 epochs instead of 4, every city drawn equally often & 0.574 \\
+b\_mnv3\_512\_e8\_bal & 512 px (the maximum) and 8 epochs & \textbf{0.586} \\
+\bottomrule
+\end{tabular}
+\end{center}
 
-\fillin{How you collected any extra photos.}
+\textbf{Starting point.} ``It was useful to run the original code first,
+because that way we had a clear starting point.'' It scored 0.489, close to
+Track A's 0.496.
 
-\fillin{Your validation score next to your leaderboard score, and why they
-might disagree.}
+\textbf{Smaller model, bigger photos.} My idea was that ``bigger photos with
+better quality'' let the model read text. MobileNetV3-Large at 448 px uses 0.85
+billion multiply-adds, less than ResNet18 at 224 (1.8 billion), so it can look
+at a photo four times as large. The score jumped from 0.489 to 0.562, the
+largest step in this project. Because the model and the size changed together,
+``we just cannot say yet which of the two changes had the most influence.''
 
-\subsection*{Your submission, as the grader sees it}
+\textbf{Longer and balanced.} 6 epochs with balanced cities: 0.574. Busan went
+from 0.462 to 0.511 and Osaka from 0.436 to 0.519: ``not only did the total
+score improve, but the differences between the cities also became smaller.''
+
+\textbf{Largest size, longer.} 512 px and 8 epochs: 0.586, with Taipei at
+0.700. 1.11 billion multiply-adds, within the limit of 2.0.
+
+\textbf{Extra photos.} I did not collect extra photos; all Track B models were
+trained on \texttt{data/starter/train} only.
+
+\textbf{Validation next to leaderboard.} \fillin{leaderboard score of
+track-b-3 when it appears}. Validation scores on the leaderboard are generally
+much lower than on our validation photos (my starter recipe: 0.496 vs 0.403).
+\fillin{Why you think they disagree, in your own words.}
+
+\subsection*{My submission, as the grader sees it}
 \outputfile{outputs/check_submission.txt}
 
 % ---------------------------------------------------------------------------
 \section*{What made the difference}
 
-\fillin{Which change helped most and which least, in both tracks, with your
-numbers.}
+\fillin{In your own words. The numbers: in Track B, switching to MobileNetV3
+at 448 px helped most (+0.073); balancing and longer training added +0.012,
+and 512 px with 8 epochs another +0.012. In Track A no change moved the score
+by more than 0.02: the best was ema\_no\_smooth (+0.011 over the baseline),
+the worst less\_zoom ($-$0.013 compared with no\_flip).}
 
-\fillin{What you would do next with one more week.}
+\section*{What I would do next with one more week}
+
+``For Track A I would first try to distribute the 250,000 photos better over
+the cities via \texttt{selection.csv}. [...] In \texttt{recipe.py} I would test
+different learning rates, for example a lower learning rate [...]. I would
+also try different photo edits, such as adjusting brightness and contrast.
+For Track B I would train the model longer, for example 10 or 12 rounds
+instead of 8. [...] I would test the image size, the number of training
+rounds and the balancing of the cities separately.'' (full text at the end of
+the lab notebook)
 
 % ---------------------------------------------------------------------------
 \section*{All runs}

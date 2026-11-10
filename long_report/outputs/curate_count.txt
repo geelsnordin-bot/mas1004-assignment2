@@ -1,0 +1,8 @@
+city      selected     of   by source
+seoul        10834      0   commons 6330, osv5m 320, youtube 4184
+busan         4179      0   commons 3383, youtube 796
+tokyo        13055      0   commons 6683, osv5m 1916, youtube 4456
+osaka         6731      0   commons 4878, osv5m 341, youtube 1512
+taipei        6439      0   commons 4978, osv5m 533, youtube 928
+total 41238 rows
+dropped: 329 museum pieces; 211 title bar / logo top right; 205 many shopping mall interiors; 203 many beach frames from one video; 199 grey street series: one photographer; 171 purple text overlay at the top; 141 360-degree fisheye series; 140 almost identical dashcam frames; 140 Sunflower occupation: indoors; 138 Dotonbori series: one photographer; 121 food series; 119 Bukchon series: one photographer; 118 night-time bus cabin: dashboard; 116 vlog selfies; 102 car show; 101 fire brigade series: indoors; 101 black-and-white series; 100 fire brigade at a flat fire: series; 81 identical information signs; 80 matsuri/fireworks series; 61 election rally; 15 aeroplane; 8 animals; 5 award ceremony: podium; 5 black-and-white / politicians; 3 navy/fire brigade ceremony: uniforms; 2 panorama strip; 1 looks like Speicherstadt Hamburg; 1 Pompeo: also in Seoul; 1 tilt-shift; 1 sepia

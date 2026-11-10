@@ -1,0 +1,5 @@
+$ python src/check_submission.py --no-val
+# commit b9ab314
+/content/drive/MyDrive/mas1004/assignment2/submission/model.onnx: 16.8 MB, 4.20 million parameters, 1.11 billion multiply-adds per 512 x 512 photo
+  limits: 12 million parameters, 2.0 billion multiply-adds
+  format and limits: OK
