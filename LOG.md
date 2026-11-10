@@ -70,9 +70,9 @@ End the log with your plan for what to try next.
 
 ## 2026-11-10 ema_no_smooth (Track A)
 - changed: no more label smoothing in `loss_fn` (was 0.1); otherwise the same as ema
-- why: (to be filled in by Nordin)
+- why: "We chose to turn label smoothing off, because we wanted to investigate whether the model would perform better when it learned more directly from the correct labels, without weakening them."
 - validation: 0.507 (seoul 0.570, busan 0.429, tokyo 0.526, osaka 0.422, taipei 0.591) (before: 0.500, ema)
-- what it means: (to be filled in by Nordin)
+- what it means: "The score rose from 0.500 to 0.507, which is a small improvement. In my view this shows that label smoothing was not really necessary in our case and possibly even limited performance a little. Because the difference is small, though, we cannot say with certainty whether turning off label smoothing was actually the cause."
 
 ## 2026-11-10 b_mnv3_512_e8_bal (Track B)
 - changed: photos of 512 px (the maximum) instead of 448, and 8 epochs instead of 6; otherwise the same as b_mnv3_448_e6_bal. Two changes at once
