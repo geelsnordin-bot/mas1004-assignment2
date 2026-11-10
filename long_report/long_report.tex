@@ -92,7 +92,9 @@ within the available training rounds.'' So I kept the original learning rate.
 \textbf{Final recipe and selection:} \texttt{track\_a/recipe.py} as in
 \texttt{ema\_no\_smooth} (balanced sampling, no flip, EMA, no label smoothing)
 with my selection of 41,238 photos. Validation 0.507.
-Leaderboard: \fillin{leaderboard score of track-a-4 when it appears}.
+Leaderboard: not yet published for this release when this report was
+written (the leaderboard was last updated 2026-11-09 02:41 KST, before my
+releases \texttt{track-a-2} to \texttt{track-a-4}).
 My first release (the starter recipe, validation 0.496) scored 0.403 on the
 leaderboard.
 
@@ -180,9 +182,26 @@ score improve, but the differences between the cities also became smaller.''
 \textbf{Extra photos.} I did not collect extra photos; all Track B models were
 trained on \texttt{data/starter/train} only.
 
-\textbf{Validation next to leaderboard.} \fillin{leaderboard score of
-track-b-3 when it appears}. Validation scores on the leaderboard are generally
-much lower than on our validation photos (my starter recipe: 0.496 vs 0.403).
+\textbf{Validation next to leaderboard.} My Track B releases had not been
+scored yet when this report was written (leaderboard last updated 2026-11-09
+02:41 KST). The only scored release so far is my first Track A release, the
+starter recipe:
+
+\begin{center}\footnotesize
+\begin{tabular}{lrrrrrr}
+\toprule
+ & total & seoul & busan & tokyo & osaka & taipei \\
+\midrule
+validation (baseline, seed 0) & 0.496 & 0.568 & 0.383 & 0.637 & 0.343 & 0.547 \\
+leaderboard (seeds 0, 1, 2; range 0.389--0.413) & 0.403 & 0.64 & 0.19 & 0.71 & 0.25 & 0.22 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The given \texttt{train\_b.py} model scores 0.403 on the leaderboard, against
+0.489 on my validation photos. On the leaderboard Busan and Taipei drop the
+most.
+
 ``I think the score on the leaderboard was lower because the model had to
 recognise different photos there than in validation. The score went from
 0.496 to 0.403. Probably the photos on the leaderboard were harder or
