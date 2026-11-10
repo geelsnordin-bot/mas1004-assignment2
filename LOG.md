@@ -76,6 +76,6 @@ End the log with your plan for what to try next.
 
 ## 2026-11-10 b_mnv3_512_e8_bal (Track B)
 - changed: photos of 512 px (the maximum) instead of 448, and 8 epochs instead of 6; otherwise the same as b_mnv3_448_e6_bal. Two changes at once
-- why: (to be filled in by Nordin)
+- why: "We chose to enlarge the images from 448 to 512 pixels and to train the model for 8 rounds instead of 6. With this we wanted to investigate whether the model could recognise the cities better thanks to more detail in the images and longer training."
 - validation: 0.586 (seoul 0.595, busan 0.494, tokyo 0.627, osaka 0.515, taipei 0.700) (before: 0.574, b_mnv3_448_e6_bal)
-- what it means: (to be filled in by Nordin)
+- what it means: "The total score rose from 0.574 to 0.586, which was again an improvement. Taipei in particular stood out with a score of 0.70. In my view this shows that bigger images and longer training together can have a positive effect on performance. We just cannot say exactly which of the two changes helped the most."
