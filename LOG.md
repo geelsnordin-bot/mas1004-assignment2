@@ -88,7 +88,7 @@ End the log with your plan for what to try next.
 
 ## 2026-11-10 safe_all_photos (Track A)
 - changed: all training photos again (no `selection.csv`), left-right flip back, no EMA; kept every city drawn equally often and no label smoothing. Several changes at once, compared with ema_no_smooth
-- why: (to be filled in)
+- why: "We did this because we had looked at the scores of the people above us and the first score that we ourselves had on 29 October."
 - validation: 0.505 (seoul 0.510, busan 0.442, tokyo 0.518, osaka 0.456, taipei 0.599) (before: 0.507, ema_no_smooth)
 - what it means: (to be filled in)
 
