@@ -23,9 +23,8 @@
 \makeheader
 
 Leaderboard nickname: \textbf{Stroopwafel-Seoul}. Last releases:
-\texttt{track-a-4} (Track A, recipe \texttt{ema\_no\_smooth}) and
+\texttt{track-a-5} (Track A, recipe \texttt{safe\_all\_photos}) and
 \texttt{track-b-3} (Track B, \texttt{b\_mnv3\_512\_e8\_bal}).
-\fillin{update if a later release is made}
 
 All validation scores below are the balanced accuracy on
 \texttt{data/starter/val} printed by \texttt{src/official.py} (Track A) and
@@ -89,14 +88,37 @@ limited performance a little'', but the difference is small.
 ``Possibly the steps were too small, so that the model could learn less well
 within the available training rounds.'' So I kept the original learning rate.
 
-\textbf{Final recipe and selection:} \texttt{track\_a/recipe.py} as in
-\texttt{ema\_no\_smooth} (balanced sampling, no flip, EMA, no label smoothing)
-with my selection of 41,238 photos. Validation 0.507.
-Leaderboard: not yet published for this release when this report was
-written (the leaderboard was last updated 2026-11-09 02:41 KST, before my
-releases \texttt{track-a-2} to \texttt{track-a-4}).
-My first release (the starter recipe, validation 0.496) scored 0.403 on the
-leaderboard.
+\textbf{What the leaderboard showed.} On 10 November the leaderboard
+(updated 15:06 KST) scored my release \texttt{track-a-3} (balanced + EMA, on my
+selection; the grader measured validation 0.493):
+
+\begin{center}\footnotesize
+\begin{tabular}{lrrrrrr}
+\toprule
+ & total & seoul & busan & tokyo & osaka & taipei \\
+\midrule
+starter recipe & 0.401 & 0.60 & 0.19 & 0.72 & 0.27 & 0.22 \\
+my \texttt{track-a-3} (range 0.359--0.378) & 0.369 & 0.58 & 0.10 & 0.64 & 0.30 & 0.22 \\
+my Track B \texttt{track-b-3} (all photos) & 0.428 & 0.65 & 0.30 & 0.73 & 0.31 & 0.15 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+My recipe, better on validation, was worse than the starter recipe on the
+leaderboard photos, mainly for Busan (0.10). My selection had removed the
+most photos from Busan (from 5,191 to 4,179). My Track B model, trained on all
+photos, scores 0.30 for Busan. Other students who only balanced the cities
+(some also without label smoothing) scored 0.41--0.43, and one who only added
+EMA scored 0.391.
+\fillin{Your own words: what you think this means.}
+
+\textbf{Final recipe:} \texttt{safe\_all\_photos}: the starter recipe with every
+city drawn equally often and no label smoothing, on all training photos (no
+\texttt{selection.csv}), with the left-right flip and without EMA. It keeps only
+the two changes that worked on the leaderboard for others and drops everything
+I could not trust: my selection, no flip and EMA.
+Validation: \fillin{validation score of safe\_all\_photos, or: could not be
+measured before the deadline}. Leaderboard: not known before the deadline.
 
 % ---------------------------------------------------------------------------
 \section*{Decisions I made from photos}
@@ -182,25 +204,25 @@ score improve, but the differences between the cities also became smaller.''
 \textbf{Extra photos.} I did not collect extra photos; all Track B models were
 trained on \texttt{data/starter/train} only.
 
-\textbf{Validation next to leaderboard.} My Track B releases had not been
-scored yet when this report was written (leaderboard last updated 2026-11-09
-02:41 KST). The only scored release so far is my first Track A release, the
-starter recipe:
+\textbf{Validation next to leaderboard} (leaderboard updated 2026-11-10
+15:06 KST):
 
 \begin{center}\footnotesize
-\begin{tabular}{lrrrrrr}
+\begin{tabular}{lrr}
 \toprule
- & total & seoul & busan & tokyo & osaka & taipei \\
+release & validation & leaderboard \\
 \midrule
-validation (baseline, seed 0) & 0.496 & 0.568 & 0.383 & 0.637 & 0.343 & 0.547 \\
-leaderboard (seeds 0, 1, 2; range 0.389--0.413) & 0.403 & 0.64 & 0.19 & 0.71 & 0.25 & 0.22 \\
+\texttt{track-a-1} starter recipe (Track A) & 0.496 & 0.403 \\
+\texttt{track-a-3} balanced + EMA on my selection (Track A) & 0.500 & 0.369 \\
+\texttt{track-b-3} MobileNetV3 512, 8 epochs, balanced (Track B) & 0.586 & 0.428 \\
+\texttt{train\_b.py} as given (course baseline) & -- & 0.403 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-The given \texttt{train\_b.py} model scores 0.403 on the leaderboard, against
-0.489 on my validation photos. On the leaderboard Busan and Taipei drop the
-most.
+All my scores are much lower on the leaderboard, Taipei most of all for Track
+B (0.700 on validation, 0.15 on the leaderboard). My Track B model still beats
+the given \texttt{train\_b.py} model (0.428 against 0.403).
 
 ``I think the score on the leaderboard was lower because the model had to
 recognise different photos there than in validation. The score went from
