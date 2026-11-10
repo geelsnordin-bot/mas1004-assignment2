@@ -80,6 +80,12 @@ End the log with your plan for what to try next.
 - validation: 0.586 (seoul 0.595, busan 0.494, tokyo 0.627, osaka 0.515, taipei 0.700) (before: 0.574, b_mnv3_448_e6_bal)
 - what it means: "The total score rose from 0.574 to 0.586, which was again an improvement. Taipei in particular stood out with a score of 0.70. In my view this shows that bigger images and longer training together can have a positive effect on performance. We just cannot say exactly which of the two changes helped the most."
 
+## 2026-11-10 lr_1e4 (Track A)
+- changed: learning rate 1e-4 instead of 3e-4 (in `make_optimizer` and as `max_lr` in `make_scheduler`); otherwise the same as ema_no_smooth
+- why: "We chose to lower the learning rate, because the model then takes smaller steps during training. We hoped the model would learn more accurately this way and eventually reach a better score."
+- validation: 0.501 (seoul 0.552, busan 0.427, tokyo 0.533, osaka 0.430, taipei 0.565) (before: 0.507, ema_no_smooth)
+- what it means: "The score, however, dropped from 0.507 to 0.501. This shows that a lower learning rate did not lead to better results in our experiment. Possibly the steps were too small, so that the model could learn less well within the available training rounds. That is why we decided to keep the original learning rate."
+
 ## Plan for what to try next
 "If we had more time, for Track A I would first try to distribute the 250,000 photos better over the cities via `selection.csv`. Seoul and Tokyo have more images than, for example, Busan and Osaka. By adjusting the distribution, the model might learn better to recognise all cities. In addition, in `recipe.py` I would test different learning rates, for example a lower learning rate, so that the model takes smaller steps during learning and possibly becomes more accurate. I would also try different photo edits, such as adjusting brightness and contrast, so that the model learns better to deal with different weather conditions and lighting.
 

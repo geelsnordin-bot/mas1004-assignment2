@@ -47,6 +47,7 @@ less\_zoom & random crop scale 0.7--1.0 instead of 0.35--1.0 (built on no\_flip)
 balanced & crop back to 0.35--1.0; every city drawn equally often (built on no\_flip) & 0.498 \\
 ema & hand in a running average of the weights (EMA, decay 0.999) & 0.500 \\
 ema\_no\_smooth & no label smoothing (was 0.1) & \textbf{0.507} \\
+lr\_1e4 & learning rate 1e-4 instead of 3e-4 (built on ema\_no\_smooth) & 0.501 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -83,6 +84,10 @@ sure whether it came from EMA or from normal fluctuations.''
 \textbf{No label smoothing} gave my best Track A score, 0.507 (0.500 before).
 ``Label smoothing was not really necessary in our case and possibly even
 limited performance a little'', but the difference is small.
+
+\textbf{Lower learning rate.} 1e-4 instead of 3e-4 gave 0.501, lower than 0.507.
+``Possibly the steps were too small, so that the model could learn less well
+within the available training rounds.'' So I kept the original learning rate.
 
 \textbf{Final recipe and selection:} \texttt{track\_a/recipe.py} as in
 \texttt{ema\_no\_smooth} (balanced sampling, no flip, EMA, no label smoothing)
