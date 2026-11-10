@@ -52,9 +52,9 @@ End the log with your plan for what to try next.
 
 ## 2026-11-09 balanced (Track A)
 - changed: every city drawn equally often (`sample_weights` gives each photo 1 / the number of photos of its city); otherwise the same as no_flip
-- why: (to be filled in by Nordin)
+- why: "We wanted to even out the cities because there was a big difference in the number of images. Seoul (11,274) and Tokyo (13,347), for example, had many more images than Busan (5,191) and Osaka (7,200). Because of this the model could learn more from the bigger cities and possibly become biased."
 - validation: 0.498 (seoul 0.552, busan 0.415, tokyo 0.554, osaka 0.427, taipei 0.540) (before: 0.491, no_flip)
-- what it means: (to be filled in by Nordin)
+- what it means: "That Busan and Osaka scored better shows that balancing probably helped to recognise smaller cities better. That Seoul and Tokyo actually scored worse is possibly because the model got fewer training examples of these cities. I find this an interesting result, because it shows that a fairer distribution does not automatically mean that all cities are recognised better. We improved the performance for some cities, but gave up performance on other cities for it. But overall, on net, the model scored better because of it."
 
 ## 2026-11-09 ema (Track A)
 - changed: keep a running average of the weights next to the model (EMA, decay 0.999, roughly the last 1000 steps) and hand in that average; otherwise the same as balanced
