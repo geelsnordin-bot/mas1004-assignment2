@@ -90,7 +90,7 @@ End the log with your plan for what to try next.
 - changed: all training photos again (no `selection.csv`), left-right flip back, no EMA; kept every city drawn equally often and no label smoothing. Several changes at once, compared with ema_no_smooth
 - why: "We did this because we had looked at the scores of the people above us and the first score that we ourselves had on 29 October."
 - validation: 0.505 (seoul 0.510, busan 0.442, tokyo 0.518, osaka 0.456, taipei 0.599) (before: 0.507, ema_no_smooth)
-- what it means: (to be filled in)
+- what it means: "I think this shows that putting the photos back was a good choice. The score of 0.505 is very close to my best score of 0.507, and Busan improved to 0.44. Probably some photos that I had removed earlier were useful for the model after all. I had first thought that these photos were not important."
 
 ## Plan for what to try next
 "If we had more time, for Track A I would first try to distribute the 250,000 photos better over the cities via `selection.csv`. Seoul and Tokyo have more images than, for example, Busan and Osaka. By adjusting the distribution, the model might learn better to recognise all cities. In addition, in `recipe.py` I would test different learning rates, for example a lower learning rate, so that the model takes smaller steps during learning and possibly becomes more accurate. I would also try different photo edits, such as adjusting brightness and contrast, so that the model learns better to deal with different weather conditions and lighting.
