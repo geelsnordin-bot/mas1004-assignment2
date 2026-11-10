@@ -36,7 +36,7 @@ End the log with your plan for what to try next.
 - changed: nothing, src/train_b.py with its default settings (ResNet18, 224 px, 4 epochs, all training photos)
 - why: "It was useful to run the original code first, because that way we had a clear starting point (baseline). This let us compare properly later whether our changes, such as a different model and bigger images, actually led to better results."
 - validation: 0.489 (seoul 0.580, busan 0.360, tokyo 0.591, osaka 0.358, taipei 0.557)
-- what it means: "That Track B with 0.489 scored almost the same as Track A with 0.496 I found logical and reassuring. We used the same model and the same settings, after all. It showed that both baselines performed comparably and that we could start improving from a fair starting point."
+- what it means: "That Track B with 0.489 scored almost the same as Track A with 0.496 I found logical and reassuring. We used the same model (ResNet18 at 224 px), although the training settings were not exactly the same. It showed that both baselines performed comparably and that we could start improving from a fair starting point."
 
 ## 2026-11-09 less_zoom (Track A)
 - changed: `T.RandomResizedCrop(224, scale=(0.7, 1.0))` instead of `scale=(0.35, 1.0)`; otherwise the same as no_flip
@@ -48,7 +48,7 @@ End the log with your plan for what to try next.
 - changed: MobileNetV3-Large instead of ResNet18, photos of 448 px instead of 224; otherwise 4 epochs like b_starter
 - why: "bigger photos with better quality are best, I think, because then it can read text"
 - validation: 0.562 (seoul 0.621, busan 0.462, tokyo 0.683, osaka 0.436, taipei 0.608) (before: 0.489, b_starter)
-- what it means: (to be filled in by Nordin)
+- what it means: "The rise from 0.489 to 0.562 shows that our changes had a positive effect on the model's performance. By switching from ResNet18 to MobileNetV3 and enlarging the images from 224 to 448 pixels, the model could probably recognise important details better. I think this is a good improvement, because the score rose by 0.073 (7.3 percentage points). This shows that our changes together were effective. We just cannot say yet which of the two changes had the most influence."
 
 ## 2026-11-09 balanced (Track A)
 - changed: every city drawn equally often (`sample_weights` gives each photo 1 / the number of photos of its city); otherwise the same as no_flip
