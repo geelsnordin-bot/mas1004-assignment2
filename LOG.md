@@ -64,9 +64,9 @@ End the log with your plan for what to try next.
 
 ## 2026-11-09 b_mnv3_448_e6_bal (Track B)
 - changed: 6 epochs instead of 4, and every city drawn equally often (`--balance`); otherwise the same as b_mnv3_448. Two changes at once, so it cannot be said which of the two made the difference
-- why: (to be filled in by Nordin)
+- why: "We chose to train the model for 6 rounds instead of 4 and to even out the cities, because we wanted to investigate whether this would improve performance."
 - validation: 0.574 (seoul 0.576, busan 0.511, tokyo 0.620, osaka 0.519, taipei 0.645) (before: 0.562, b_mnv3_448)
-- what it means: (to be filled in by Nordin)
+- what it means: "The total score rose from 0.562 to 0.574. Busan (0.46 → 0.51) and Osaka (0.44 → 0.52) in particular improved clearly. In my view this shows that, thanks to the better distribution, the model gave more attention to cities with fewer images. I found this a positive result, because not only did the total score improve, but the differences between the cities also became smaller. However, we cannot say exactly whether this came from the longer training or from the balancing."
 
 ## 2026-11-10 ema_no_smooth (Track A)
 - changed: no more label smoothing in `loss_fn` (was 0.1); otherwise the same as ema
