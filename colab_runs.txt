@@ -1,1 +1,3 @@
 python src/official.py --tag safe_all_photos
+python src/official_variant.py track_a_variants/indoor --tag safe_indoor
+python src/manual_list.py sheets
