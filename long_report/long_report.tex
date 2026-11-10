@@ -111,7 +111,7 @@ most photos from Busan (from 5,191 to 4,179). My Track B model, trained on all
 photos, scores 0.30 for Busan. Other students who only balanced the cities
 (some also without label smoothing) scored 0.41--0.43, and one who only added
 EMA scored 0.391.
-\fillin{Your own words: what you think this means.}
+``I was quite shocked when I saw that my score on the leaderboard was only 0.369, while the starter model reached 0.401. Busan in particular stood out with a score of only 0.10. I think that removing certain photos had a bigger negative influence than I had expected. I had removed photos with a watermark, because I had expected the model to pay attention to that, but that was perhaps less than expected.''
 
 \textbf{Final recipe:} \texttt{safe\_all\_photos}: the starter recipe with every
 city drawn equally often and no label smoothing, on all training photos (no
