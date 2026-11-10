@@ -43,3 +43,39 @@ End the log with your plan for what to try next.
 - why: "door meer te zien van een foto kan het model een hint krijgen welke stad er bij past stel hij zoomt in en pakt daardoor niet de tekst van een billboard dan wordt kiezen een stuk lastiger"
 - validation: 0.478 (seoul 0.579, busan 0.344, tokyo 0.611, osaka 0.352, taipei 0.505) (before: 0.491, no_flip)
 - what it means: "Ik denk dat de validatiescore lager is uitgevallen doordat het model bij minder willekeurig inzoomen steeds ongeveer dezelfde afbeeldingen te zien kreeg. Hierdoor heeft het model mogelijk te veel geleerd van de trainingsfoto's zelf, in plaats van de algemene kenmerken van een stad te herkennen. Daardoor werkte het model goed op de trainingsdata, maar minder goed op nieuwe afbeeldingen tijdens de validatie."
+
+## 2026-11-09 b_mnv3_448 (Track B)
+- changed: MobileNetV3-Large in plaats van ResNet18, foto's van 448 px in plaats van 224; verder 4 epochs zoals b_starter
+- why: "grotere fotos met betere kwaliteit is denk ik het beste want dan kan het teksten lezen"
+- validation: 0.562 (seoul 0.621, busan 0.462, tokyo 0.683, osaka 0.436, taipei 0.608) (before: 0.489, b_starter)
+- what it means: (nog in te vullen door Nordin)
+
+## 2026-11-09 balanced (Track A)
+- changed: elke stad even vaak getrokken (`sample_weights` geeft elke foto 1 / aantal foto's van zijn stad); verder gelijk aan no_flip
+- why: (nog in te vullen door Nordin)
+- validation: 0.498 (seoul 0.552, busan 0.415, tokyo 0.554, osaka 0.427, taipei 0.540) (before: 0.491, no_flip)
+- what it means: (nog in te vullen door Nordin)
+
+## 2026-11-09 ema (Track A)
+- changed: naast het model een lopend gemiddelde van de gewichten bijhouden (EMA, decay 0.999, ongeveer de laatste 1000 stappen) en dat gemiddelde inleveren; verder gelijk aan balanced
+- why: (nog in te vullen door Nordin)
+- validation: 0.500 (seoul 0.561, busan 0.429, tokyo 0.530, osaka 0.425, taipei 0.553) (before: 0.498, balanced)
+- what it means: (nog in te vullen door Nordin)
+
+## 2026-11-09 b_mnv3_448_e6_bal (Track B)
+- changed: 6 epochs in plaats van 4, en elke stad even vaak getrokken (`--balance`); verder gelijk aan b_mnv3_448. Twee veranderingen tegelijk, dus niet te zeggen welke van de twee het verschil maakte
+- why: (nog in te vullen door Nordin)
+- validation: 0.574 (seoul 0.576, busan 0.511, tokyo 0.620, osaka 0.519, taipei 0.645) (before: 0.562, b_mnv3_448)
+- what it means: (nog in te vullen door Nordin)
+
+## 2026-11-10 ema_no_smooth (Track A)
+- changed: geen label smoothing meer in `loss_fn` (was 0.1); verder gelijk aan ema
+- why: (nog in te vullen door Nordin)
+- validation: 0.507 (seoul 0.570, busan 0.429, tokyo 0.526, osaka 0.422, taipei 0.591) (before: 0.500, ema)
+- what it means: (nog in te vullen door Nordin)
+
+## 2026-11-10 b_mnv3_512_e8_bal (Track B)
+- changed: foto's van 512 px (het maximum) in plaats van 448, en 8 epochs in plaats van 6; verder gelijk aan b_mnv3_448_e6_bal. Twee veranderingen tegelijk
+- why: (nog in te vullen door Nordin)
+- validation: 0.586 (seoul 0.595, busan 0.494, tokyo 0.627, osaka 0.515, taipei 0.700) (before: 0.574, b_mnv3_448_e6_bal)
+- what it means: (nog in te vullen door Nordin)
