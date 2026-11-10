@@ -184,7 +184,13 @@ trained on \texttt{data/starter/train} only.
 \textbf{Validation next to leaderboard.} \fillin{leaderboard score of
 track-b-3 when it appears}. Validation scores on the leaderboard are generally
 much lower than on our validation photos (my starter recipe: 0.496 vs 0.403).
-\fillin{Why you think they disagree, in your own words.}
+``I think the score on the leaderboard was lower because the model had to
+recognise different photos there than in validation. The score went from
+0.496 to 0.403. Probably the photos on the leaderboard were harder or
+different from the photos on which we had tested the model before. Because of
+this the model had more trouble recognising the right cities. This shows that
+a good score during validation does not always mean that the model also works
+well on new photos.''
 
 \subsection*{My submission, as the grader sees it}
 \outputfile{outputs/check_submission.txt}
