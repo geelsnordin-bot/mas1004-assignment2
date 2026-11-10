@@ -1,3 +1,2 @@
-python src/official.py --tag ema_no_smooth
-python src/train_b.py --tag b_mnv3_512_e8_bal --model mobilenet_v3_large --size 512 --epochs 8 --balance --submit
+python src/train_b.py --tag b_mnv3_512_e12_bal --model mobilenet_v3_large --size 512 --epochs 12 --balance --submit
 python src/check_submission.py --no-val
