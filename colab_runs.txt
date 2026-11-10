@@ -1,3 +1,4 @@
 python src/official.py --tag lr_1e4
 python src/train_b.py --tag b_mnv3_512_e12_bal --model mobilenet_v3_large --size 512 --epochs 12 --balance --submit
 python src/check_submission.py --no-val
+python src/manual_list.py sheets
