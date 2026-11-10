@@ -100,6 +100,7 @@ selection; the grader measured validation 0.493):
 \midrule
 starter recipe & 0.401 & 0.60 & 0.19 & 0.72 & 0.27 & 0.22 \\
 my \texttt{track-a-3} (range 0.359--0.378) & 0.369 & 0.58 & 0.10 & 0.64 & 0.30 & 0.22 \\
+my \texttt{track-a-5} (range 0.407--0.422), scored later that evening & 0.413 & 0.58 & 0.27 & 0.66 & 0.29 & 0.26 \\
 my Track B \texttt{track-b-3} (all photos) & 0.428 & 0.65 & 0.30 & 0.73 & 0.31 & 0.15 \\
 \bottomrule
 \end{tabular}
@@ -120,8 +121,10 @@ the two changes that worked on the leaderboard for others and drops everything
 I could not trust: my selection, no flip and EMA.
 Validation: 0.505 (seoul 0.510, busan 0.442, tokyo 0.518, osaka 0.456,
 taipei 0.599), almost the same as my best run (0.507), with Busan at 0.442
-instead of 0.415--0.427 in my runs on the selection. Leaderboard: not known
-before the deadline.
+instead of 0.415--0.427 in my runs on the selection. Leaderboard (updated
+10 November, about 20:00 KST): 0.413 (range 0.407--0.422; seoul 0.58, busan 0.27,
+tokyo 0.66, osaka 0.29, taipei 0.26), 6th place and above the starter recipe
+(0.401). Busan went from 0.10 (\texttt{track-a-3}) to 0.27.
 ``I think this shows that putting the photos back was a good choice. The score of 0.505 is very close to my best score of 0.507, and Busan improved to 0.44. Probably some photos that I had removed earlier were useful for the model after all. I had first thought that these photos were not important.''
 
 % ---------------------------------------------------------------------------
@@ -227,6 +230,7 @@ release & validation & leaderboard \\
 \midrule
 \texttt{track-a-1} starter recipe (Track A) & 0.496 & 0.403 \\
 \texttt{track-a-3} balanced + EMA on my selection (Track A) & 0.500 & 0.369 \\
+\texttt{track-a-5} balanced, no label smoothing, all photos (Track A) & 0.505 & 0.413 \\
 \texttt{track-b-3} MobileNetV3 512, 8 epochs, balanced (Track B) & 0.586 & 0.428 \\
 \texttt{train\_b.py} as given (course baseline) & -- & 0.403 \\
 \bottomrule
