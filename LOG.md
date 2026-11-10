@@ -34,9 +34,9 @@ End the log with your plan for what to try next.
 
 ## 2026-11-07 b_starter (Track B)
 - changed: nothing, src/train_b.py with its default settings (ResNet18, 224 px, 4 epochs, all training photos)
-- why: (to be filled in by Nordin)
+- why: "It was useful to run the original code first, because that way we had a clear starting point (baseline). This let us compare properly later whether our changes, such as a different model and bigger images, actually led to better results."
 - validation: 0.489 (seoul 0.580, busan 0.360, tokyo 0.591, osaka 0.358, taipei 0.557)
-- what it means: (to be filled in by Nordin)
+- what it means: "That Track B with 0.489 scored almost the same as Track A with 0.496 I found logical and reassuring. We used the same model and the same settings, after all. It showed that both baselines performed comparably and that we could start improving from a fair starting point."
 
 ## 2026-11-09 less_zoom (Track A)
 - changed: `T.RandomResizedCrop(224, scale=(0.7, 1.0))` instead of `scale=(0.35, 1.0)`; otherwise the same as no_flip
