@@ -101,9 +101,27 @@ leaderboard.
 
 \picturefile{figures/mistakes_baseline_seed0_busan_00.png}
 
-\fillin{What you looked at (the mistakes sheets of the baseline and the
-look/manual sheets per city), what you saw in common, and the rule you wrote
-before acting. In your own words.}
+\textbf{What I looked at.} Contact sheets of the training photos of each city
+(\texttt{curate.py look}) and of the photos the baseline model got wrong
+(\texttt{curate.py mistakes}), like the one above.
+
+\textbf{What I saw} (written on 6 November, after looking at the sheets):
+\begin{itemize}
+  \item ``Many images without city information: food, animals, museum pieces,
+    press moments, cars, interiors, documents.''
+  \item ``Overlays steer the prediction. Osaka frames with a green overlay and
+    Japanese subtitles go to Seoul/Busan, because Korean YouTube videos have
+    many titles and watermarks.''
+  \item ``Series and near-duplicates. Video frames and photo series by one
+    photographer appear dozens of times, also in val (e.g.\ the same blue
+    Seoul bus 4x).''
+\end{itemize}
+
+\textbf{My rule, before acting:} ``Junk out. Everything that has nothing to do
+with the city: photos of food, animals, museum pieces, press moments,
+uniforms, aeroplanes, cars up close and interiors. Subtitles, logos and
+watermarks in the picture also fall under this idea.''
+For long series from one photographer or video I kept only a few photos.
 
 \picturefile{figures/manual_busan_00.png}
 
